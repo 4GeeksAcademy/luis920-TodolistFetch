@@ -73,7 +73,7 @@ const Home = () => {
   };
 
   // Eliminar todas las tareas
-  const EliminarTodasTareas = async () => {
+  const EliminarTodasLasTareas = async () => {
     try {
       for (const tarea of task) {
         await fetch(`https://playground.4geeks.com/todo/todos/${tarea.id}`, {
@@ -97,7 +97,7 @@ const Home = () => {
         {task.length > 0 ? (
           <>
             <button 
-              onClick={EliminarTodasTareas} 
+              onClick={EliminarTodasLasTareas} 
               className="btn btn-danger"
               style={{ marginBottom: '20px' }}
             >
