@@ -1,7 +1,13 @@
 import React from "react";
 
-//create your first component
+// Componente para el input de agregar tarea
 const InputAgregarTarea = ({ input, AgregarTarea, tarea }) => {
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      AgregarTarea();  // Llamamos a la función AgregarTarea
+    }
+  };
+
   return (
     <div>
       <header>
@@ -11,19 +17,15 @@ const InputAgregarTarea = ({ input, AgregarTarea, tarea }) => {
       </header>
       <div className="input">
         <input
-          className=""
+          className="task-input"
           type="text"
           autoComplete="off"
           name="text"
-          placeholder="Proxima tarea"
+          placeholder="Próxima tarea"
           value={tarea}
-          onChange={input}
+          onChange={input}  // Actualizar el valor de tarea
           required
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              AgregarTarea();
-            }
-          }}
+          onKeyDown={handleKeyDown}  // Llamamos a handleKeyDown cuando presionamos "Enter"
         />
       </div>
     </div>

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import TareaRealizada from "./tarea.jsx";
 import InputAgregarTarea from "./input.jsx";
 
-// Componente principal
 const Home = () => {
-  const [tarea, setTarea] = useState("");
-  const [task, setTask] = useState([]);
+  const [tarea, setTarea] = useState(""); // El estado para manejar el input
+  const [task, setTask] = useState([]);   // El estado para manejar las tareas
 
   // Crear el usuario al cargar la página
   useEffect(() => {
@@ -58,7 +57,7 @@ const Home = () => {
       })
         .then(() => {
           TraerDatos(); // Actualizar las tareas después de agregar una
-          setTarea(""); // Limpiar el input
+          setTarea("");  // Limpiar el input
         })
         .catch((error) => console.error("Error al agregar tarea:", error));
     }
@@ -69,27 +68,53 @@ const Home = () => {
     fetch(`https://playground.4geeks.com/todo/todos/${id}`, {
       method: "DELETE",
     })
-      .then(() => TraerDatos()) // Actualizar la lista de tareas después de eliminar
+      .then(() => TraerDatos()) 
       .catch((error) => console.error("Error al eliminar tarea:", error));
+  };
+
+  // Eliminar todas las tareas
+  const EliminarTodasTareas = async () => {
+    try {
+      for (const tarea of task) {
+        await fetch(`https://playground.4geeks.com/todo/todos/${tarea.id}`, {
+          method: "DELETE",
+        });
+      }
+      TraerDatos();
+    } catch (error) {
+      console.error("Error al eliminar todas las tareas:", error);
+    }
   };
 
   return (
     <div>
-      <InputAgregarTarea input={handleChange} AgregarTarea={AgregarTarea} />
+      <InputAgregarTarea 
+        input={handleChange} 
+        AgregarTarea={AgregarTarea} 
+        tarea={tarea} 
+      />
       <div className="row tareas">
         {task.length > 0 ? (
-          task.map((element) => (
-            <TareaRealizada
-              key={element.id} // Asignar la key a cada tarea
-              task={element.label}
-              EliminarTarea={() => EliminarTarea(element.id)} // Pasar el id a la función
-            />
-          ))
+          <>
+            <button 
+              onClick={EliminarTodasTareas} 
+              className="btn btn-danger"
+              style={{ marginBottom: '20px' }}
+            >
+              Eliminar todas las tareas
+            </button>
+            {task.map((element) => (
+              <TareaRealizada
+                key={element.id}
+                task={element.label}
+                EliminarTarea={() => EliminarTarea(element.id)}
+              />
+            ))}
+          </>
         ) : (
           <div className="tareasPendientes">
             <p>No hay tareas, añade tareas</p>
           </div>
- 
         )}
       </div>
     </div>
