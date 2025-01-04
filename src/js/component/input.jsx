@@ -23,9 +23,9 @@ const InputAgregarTarea = ({ input, AgregarTarea, tarea }) => {
           name="text"
           placeholder="Próxima tarea"
           value={tarea}
-          onChange={input}  // Actualizar el valor de tarea
+          onChange={input} 
           required
-          onKeyDown={handleKeyDown}  // Llamamos a handleKeyDown cuando presionamos "Enter"
+          onKeyDown={handleKeyDown}  
         />
       </div>
     </div>
